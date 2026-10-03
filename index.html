@@ -1,536 +1,586 @@
 
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OUR UNIVERSE · MCU</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    body {
-      background: #05050d;
-      color: #fff;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-    
-    /* Galaksi Arka Planı & Yıldızlar */
-    .space-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, #1b1035 0%, #080417 60%, #020108 100%);
-      z-index: -2;
-    }
-    .stars {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      pointer-events: none;
-    }
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-      animation: blink var(--duration) infinite ease-in-out;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Hero!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #e50914;
+            --spider-red: #ff1e27;
+            --spider-blue: #0f4c81;
+            --gold: #ffd700;
+            --dark-bg: #090a0f;
+            --card-bg: rgba(20, 24, 38, 0.75);
+            --text-glow: 0 0 12px rgba(255, 30, 39, 0.6);
+        }
 
-    /* Genel Sayfa Kart Yapısı */
-    .container {
-      width: 90%;
-      max-width: 420px;
-      margin: 20px auto;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-    .section {
-      display: none;
-      background: rgba(20, 15, 38, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 215, 0, 0.25);
-      border-radius: 24px;
-      padding: 30px 20px;
-      box-shadow: 0 0 30px rgba(111, 0, 255, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.1);
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-    .section.active { display: block; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-    h1, h2 {
-      font-family: 'Impact', sans-serif;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #ffd700;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 2px 2px 0 #ed1d24;
-      margin-bottom: 15px;
-    }
-    p {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #e2e2e2;
-    }
-    .btn-next {
-      margin-top: 25px;
-      background: linear-gradient(135deg, #ed1d24, #b30006);
-      color: #fff;
-      border: none;
-      padding: 12px 28px;
-      font-size: 15px;
-      font-weight: bold;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(237, 29, 36, 0.4);
-      transition: all 0.2s;
-    }
-    .btn-next:active { transform: scale(0.95); }
+        /* YILDIZ ANIMASYONLU ARKA PLAN */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at bottom, #1a1c29 0%, #08090d 100%);
+        }
 
-    /* 1. BÖLÜM: MARVEL LOGO & PASTA */
-    .marvel-intro {
-      font-size: 32px;
-      font-weight: 900;
-      background: #ed1d24;
-      color: #fff;
-      padding: 10px 20px;
-      display: inline-block;
-      letter-spacing: 4px;
-      font-family: 'Impact', sans-serif;
-      border: 2px solid #fff;
-      box-shadow: 0 0 20px rgba(237, 29, 36, 0.8);
-      animation: pulse 1.5s infinite alternate;
-    }
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: pulse-star var(--duration) infinite ease-in-out var(--delay);
+        }
 
-    .cake-container {
-      margin: 30px auto 10px;
-      position: relative;
-      cursor: pointer;
-    }
-    .cake-emoji { font-size: 80px; }
-    .candles {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: -20px;
-    }
-    .candle {
-      font-size: 32px;
-      font-weight: bold;
-      color: #ffd700;
-      position: relative;
-    }
-    .flame {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 18px;
-      background: orange;
-      border-radius: 50% 50% 20% 20%;
-      box-shadow: 0 0 10px red, 0 0 20px yellow;
-      animation: flicker 0.3s infinite alternate;
-    }
-    .flame.off { display: none; }
-    @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1); }
-      100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
-    }
+        @keyframes pulse-star {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 8px #fff; }
+        }
 
-    .web-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 99;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-    .web-overlay.active { opacity: 1; }
+        /* MAIN CONTAINER & SECTIONS */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    /* 2. BÖLÜM: MULTIVERSE KARTLARI */
-    .card-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 15px;
-    }
-    .m-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 12px;
-      padding: 12px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .m-card-header {
-      font-weight: bold;
-      color: #00d2ff;
-      letter-spacing: 1px;
-    }
-    .m-card-body {
-      display: none;
-      margin-top: 10px;
-      animation: fadeIn 0.4s;
-    }
-    .m-card-body img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      border: 1px solid #ffd700;
-    }
+        .section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            margin: 20px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
 
-    /* 3. BÖLÜM: STATS (SÜPER GÜÇLER) */
-    .stat-card {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid #ed1d24;
-      border-radius: 16px;
-      padding: 15px;
-      margin-bottom: 15px;
-      display: none;
-      animation: fadeIn 0.5s;
-    }
-    .stat-card.active { display: block; }
-    .stat-card img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #ffd700;
-      margin-bottom: 10px;
-    }
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    /* 4. BÖLÜM: SONSUZLUK TAŞLARI */
-    .stones-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .stone {
-      font-size: 30px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .stone:active { transform: scale(0.9); }
-    .stone-msg {
-      min-height: 50px;
-      font-style: italic;
-      color: #ffd700;
-      margin-top: 10px;
-    }
+        h1, h2 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: var(--text-glow);
+            margin-bottom: 20px;
+        }
 
-    /* 5. BÖLÜM: THOR'UN ÇEKİCİ */
-    .hammer-area {
-      height: 200px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-    .hammer {
-      font-size: 30px;
-      transition: transform 0.1s ease-out;
-      filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.5));
-    }
+        h1 { font-size: 2.2rem; color: var(--gold); }
+        h2 { font-size: 1.6rem; color: var(--spider-red); }
 
-    /* 6. BÖLÜM: MEKTUP & CLOSING */
-    .letter-img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 2px solid #ffd700;
-      margin-bottom: 15px;
-    }
-    .letter-box {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 18px;
-      border-radius: 12px;
-      border-left: 3px solid #ed1d24;
-      text-align: left;
-      font-size: 13.5px;
-      line-height: 1.7;
-    }
-    .post-credits {
-      margin-top: 15px;
-      font-size: 12px;
-      color: #00d2ff;
-      font-weight: bold;
-    }
-  </style>
+        .btn {
+            display: block;
+            width: 80%;
+            max-width: 280px;
+            margin: 25px auto 0;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #e50914, #990000);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 30, 39, 0.7);
+        }
+
+        /* CHAPTER 1: PASTA & MUMS & AĞLAR */
+        .cake-wrapper {
+            position: relative;
+            width: 220px;
+            height: 200px;
+            margin: 40px auto 20px;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to right, #111, #222);
+            border-radius: 15px 15px 5px 5px;
+            border: 2px solid var(--spider-red);
+            box-shadow: inset 0 0 20px rgba(255,30,39,0.3);
+        }
+
+        /* Örümcek Ağı Desenli Pasta Üstü */
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 30%, rgba(255,255,255,0.1) 31%),
+                        repeating-conic-gradient(from 0deg, transparent 0deg 28deg, rgba(255,255,255,0.15) 30deg);
+            border-radius: 13px 13px 0 0;
+        }
+
+        .candles {
+            position: absolute;
+            top: 35px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 30px;
+        }
+
+        .candle {
+            width: 12px;
+            height: 45px;
+            background: linear-gradient(to bottom, #fff, var(--gold));
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: orange;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 12px gold, 0 0 20px red;
+            animation: flicker 0.6s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(0.9) rotate(-2deg); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+        }
+
+        /* SPIDER WEBS EFFECT - SADECE CHAPTER 1 İÇİN */
+        #web-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 5;
+        }
+
+        .web-corner {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+        }
+
+        .web-tl { top: 0; left: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 L100,0 C70,30 30,70 0,100 Z' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M0,0 L100,100 M0,0 L50,100 M0,0 L100,50' stroke='white' stroke-width='1'/%3E%3Cpath d='M20,0 C20,20 0,20 0,20 M40,0 C40,40 0,40 0,40 M60,0 C60,60 0,60 0,60 M80,0 C80,80 0,80 0,80' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E"); }
+        .web-tr { top: 0; right: 0; transform: scaleX(-1); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 L100,0 C70,30 30,70 0,100 Z' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M0,0 L100,100 M0,0 L50,100 M0,0 L100,50' stroke='white' stroke-width='1'/%3E%3Cpath d='M20,0 C20,20 0,20 0,20 M40,0 C40,40 0,40 0,40 M60,0 C60,60 0,60 0,60 M80,0 C80,80 0,80 0,80' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E"); }
+
+        /* CHAPTER 2: MULTIVERSE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .universe-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .universe-card:hover { transform: translateY(-5deg); }
+
+        .universe-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* CHAPTER 3: HERO STATS */
+        .hero-img-box {
+            width: 100%;
+            max-width: 320px;
+            height: 250px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .hero-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stat-bar {
+            margin: 12px 0;
+        }
+
+        .stat-name {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: #ddd;
+        }
+
+        .bar-outer {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--spider-red), var(--gold));
+            width: 0%;
+            transition: width 1.2s ease-in-out;
+        }
+
+        /* CHAPTER 4: INFINITY STONES */
+        .stones-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .stone {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .stone.active {
+            opacity: 1;
+            transform: scale(1.25);
+        }
+
+        .space { background: #00d2ff; box-shadow: 0 0 15px #00d2ff; }
+        .reality { background: #ff0055; box-shadow: 0 0 15px #ff0055; }
+        .power { background: #9500ff; box-shadow: 0 0 15px #9500ff; }
+        .mind { background: #ffcc00; box-shadow: 0 0 15px #ffcc00; }
+        .time { background: #00ff66; box-shadow: 0 0 15px #00ff66; }
+        .soul { background: #ff7700; box-shadow: 0 0 15px #ff7700; }
+
+        /* CHAPTER 5: MJ & SPIDER-MAN LETTER */
+        .letter-box {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #f0f0f0;
+            background: rgba(0,0,0,0.4);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--spider-red);
+            margin-top: 20px;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .photo-gallery img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="space-bg"></div>
-  <div class="stars" id="stars"></div>
+    <!-- YILDIZLI ARKA PLAN -->
+    <div class="stars-container" id="stars"></div>
 
-  <!-- Örümcek Ağı Kaplaması -->
-  <svg class="web-overlay" id="webOverlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <path d="M0,0 L100,100 M100,0 L0,100 M50,0 L50,100 M0,50 L100,50" stroke="rgba(255,255,255,0.6)" stroke-width="0.5"/>
-    <circle cx="50" cy="50" r="20" stroke="rgba(255,255,255,0.5)" stroke-width="0.5" fill="none"/>
-    <circle cx="50" cy="50" r="35" stroke="rgba(255,255,255,0.4)" stroke-width="0.5" fill="none"/>
-  </svg>
+    <div class="container">
 
-  <div class="container">
+        <!-- CHAPTER 1: INTRO & PASTA -->
+        <div class="section active" id="ch1">
+            <div id="web-overlay">
+                <div class="web-corner web-tl"></div>
+                <div class="web-corner web-tr"></div>
+            </div>
 
-    <!-- 1. BÖLÜM: MARVEL INTRO & PASTA -->
-    <div class="section active" id="sec1">
-      <div class="marvel-intro">OUR UNIVERSE</div>
-      <p style="margin-top:15px; font-size:13px; color:#aaa;">(Mumlara dokunarak söndür! 🎂)</p>
-      
-      <div class="cake-container" onclick="extinguishCandle()">
-        <div class="candles">
-          <div class="candle">2<div class="flame" id="flame1"></div></div>
-          <div class="candle">5<div class="flame" id="flame2"></div></div>
-        </div>
-        <div class="cake-emoji">🎂</div>
-      </div>
+            <h1>SÜPER KAHRAMANIMIN DOĞUM GÜNÜ</h1>
+            <h2>Earth-616'nın En Özel Kahramanına...</h2>
+            
+            <p style="text-align: center; margin-top: 10px; color: #aaa; font-size: 0.9rem;">
+                Dileğini tut ve muma dokunarak/üfleyerek söndür!
+            </p>
 
-      <h2 id="birthdayText" style="display:none; margin-top:15px;">İYİ Kİ DOĞDUN SEVGİLİM! 🕸️✨</h2>
-      <button class="btn-next" id="btn1" style="display:none;" onclick="nextSec(2)">Multiverse'e Geç ➔</button>
-    </div>
+            <div class="cake-wrapper">
+                <div class="candles" id="candles">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+                <div class="cake"></div>
+            </div>
 
-    <!-- 2. BÖLÜM: MULTIVERSE KARTLARI -->
-    <div class="section" id="sec2">
-      <h2>MULTIVERSE KARTLARI</h2>
-      <p style="font-size:13px; color:#aaa;">Kartlara dokunarak evrenleri keşfet:</p>
+            <div id="blow-msg" style="text-align:center; height:24px; font-weight:bold; color:var(--gold);"></div>
 
-      <div class="card-grid">
-        <div class="m-card" onclick="toggleCard(1)">
-          <div class="m-card-header">EARTH-415</div>
-          <div class="m-card-body" id="cb1">
-            <h3 style="color:#ffd700; font-size:14px; margin-bottom:5px;">SÜPER KAHRAMAN EVRENİ</h3>
-            <img src="foto1.jpg" alt="Earth-415">
-            <p>Bu dünyada ikimiz de çok güçlü süper kahramanlarız ve dünyayı canavarlardan kurtarıyoruz!</p>
-          </div>
+            <button class="btn" id="btn-ch1" style="display:none;" onclick="nextChapter(2)">Multiverse'e Geç ➔</button>
         </div>
 
-        <div class="m-card" onclick="toggleCard(2)">
-          <div class="m-card-header">EARTH-718</div>
-          <div class="m-card-body" id="cb2">
-            <h3 style="color:#ffd700; font-size:14px; margin-bottom:5px;">CHİBİ EVRENİ</h3>
-            <img src="foto2.jpg" alt="Earth-718">
-            <p>Bu dünyada bir çizgi filmin içindeyiz ve her gün buz pateni yapıyoruz. Ben çok kayamıyorum ama sen her seferinde beni düşmekten kurtarıyorsun.</p>
-          </div>
+        <!-- CHAPTER 2: MULTIVERSE CARDS -->
+        <div class="section" id="ch2">
+            <h2>MULTIVERSE KARTLARI</h2>
+            <p style="text-align: center; color: #ccc; font-size: 0.9rem;">Farklı evrenlerdeki en güzel anlarımız...</p>
+            
+            <div class="cards-grid">
+                <div class="universe-card">
+                    <img src="foto1.jpg" alt="Earth-616">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-616</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Bizim Asıl Evrenimiz</p>
+                </div>
+                <div class="universe-card">
+                    <img src="foto2.jpg" alt="Earth-415">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-415</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Buz Üstündeki Anlar</p>
+                </div>
+                <div class="universe-card">
+                    <img src="foto3.jpg" alt="Earth-718">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-718</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Masal Evreni</p>
+                </div>
+                <div class="universe-card">
+                    <img src="foto4.jpg" alt="Earth-227">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-227</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Sonsuz Sevgi</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="nextChapter(3)">Güç Analizine Geç ➔</button>
         </div>
 
-        <div class="m-card" onclick="toggleCard(3)">
-          <div class="m-card-header">EARTH-227</div>
-          <div class="m-card-body" id="cb3">
-            <h3 style="color:#ffd700; font-size:14px; margin-bottom:5px;">DİSNEY EVRENİ</h3>
-            <img src="foto3.jpg" alt="Earth-227">
-            <p>Bu dünyada ben bir denizkızıyım ve kötü cadı sesimi çaldıktan sonra yakışıklı prensim beni kurtarıyor.</p>
-          </div>
+        <!-- CHAPTER 3: HERO STATS -->
+        <div class="section" id="ch3">
+            <h2>KAHRAMAN GÜÇ ANALİZİ</h2>
+            
+            <div class="hero-img-box">
+                <img src="foto5.jpg" alt="Hero Portrait">
+            </div>
+
+            <div style="max-width: 450px; margin: 0 auto;">
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Örümcek Hissiyatı (Spider-Sense)</span><span>%100</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Tatlılık & Sempatiklik</span><span>%1000</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Beni Mutlu Etme Gücü</span><span>%Infinity</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Karizma & Yakışıklılık</span><span>%100</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="nextChapter(4)">Sonsuzluk Taşları ➔</button>
         </div>
 
-        <div class="m-card" onclick="toggleCard(4)">
-          <div class="m-card-header">EARTH-616</div>
-          <div class="m-card-body" id="cb4">
-            <h3 style="color:#ffd700; font-size:14px; margin-bottom:5px;">BİZİM EVRENİMİZ ❤️</h3>
-            <img src="foto4.jpg" alt="Earth-616">
-            <p>Bu dünya ise favorim. Diğer hepsinde olduğu gibi yine sana deli gibi aşığım ve çok seviyorum.</p>
-          </div>
+        <!-- CHAPTER 4: INFINITY STONES -->
+        <div class="section" id="ch4">
+            <h2>SONSUZLUK TAŞLARI</h2>
+            <p style="text-align:center; color:#ccc; font-size:0.9rem;">Tüm taşları aktifleştirerek evrenin en büyük gücünü açığa çıkar!</p>
+
+            <div class="stones-container">
+                <div class="stone space" onclick="activateStone(this)"></div>
+                <div class="stone reality" onclick="activateStone(this)"></div>
+                <div class="stone power" onclick="activateStone(this)"></div>
+                <div class="stone mind" onclick="activateStone(this)"></div>
+                <div class="stone time" onclick="activateStone(this)"></div>
+                <div class="stone soul" onclick="activateStone(this)"></div>
+            </div>
+
+            <div id="stones-msg" style="text-align:center; font-weight:bold; color:var(--gold); height:30px;"></div>
+
+            <button class="btn" id="btn-ch4" style="display:none;" onclick="nextChapter(5)">Mjolnir Testi ➔</button>
         </div>
-      </div>
 
-      <div id="multiverseFinal" style="display:none; margin-top:20px; font-style:italic; color:#ffd700;">
-        "Tüm evrenleri ve zaman çizelgelerini aradım, yine de seni seçerdim..." ✨
-      </div>
+        <!-- CHAPTER 5: THOR'S HAMMER -->
+        <div class="section" id="ch5">
+            <h2>LAYIKLIK TESTİ</h2>
+            <p style="text-align:center; color:#ccc; font-size:0.9rem; margin-bottom: 20px;">Thor'un Çekici Mjolnir'i kaldırmaya hazır mısın?</p>
 
-      <button class="btn-next" id="btn2" style="display:none;" onclick="nextSec(3)">Süper Güçlere Geç ➔</button>
+            <div style="text-align:center;">
+                <div id="hammer" style="font-size: 5rem; cursor:pointer; transition: transform 0.2s;" onclick="liftHammer()">🔨</div>
+            </div>
+
+            <div id="hammer-msg" style="text-align:center; margin-top:15px; font-weight:bold; color:var(--gold); height:30px;"></div>
+
+            <button class="btn" id="btn-ch5" style="display:none;" onclick="nextChapter(6)">Mektuba Geç ➔</button>
+        </div>
+
+        <!-- CHAPTER 6: ROMANTIC LETTER -->
+        <div class="section" id="ch6">
+            <h2>SEN BENİM EN BÜYÜK KAHRAMANIMSIN</h2>
+
+            <div class="photo-gallery">
+                <img src="foto6.jpg" alt="Foto 6">
+                <img src="foto7.jpg" alt="Foto 7">
+            </div>
+
+            <div class="letter-box">
+                <p>İyi ki doğdun sevgilim, iyi ki hayatımdasın...</p>
+                <br>
+                <p>Sen benim sadece sevgilim değil, bu dünyadaki en özel kahramanımsın. Spider-Man gibi her zaman koruyan, neşelendiren ve hayatıma renk katan birisin. Sen yanımdayken her evren çok daha güzel, her an çok daha anlamlı.</p>
+                <br>
+                <p>Yeni yaşında tüm dileklerinin gerçekleşmesini, birlikte daha nice mutlu, kahkaha dolu ve aşk dolu yıllar geçirmeyi diliyorum.</p>
+                <br>
+                <p style="text-align: right; font-weight: bold; color: var(--gold);">Seni Çok Seviyorum ❤️</p>
+            </div>
+
+            <div style="margin-top:20px;">
+                <img src="foto8.jpg" alt="Foto 8" style="width:100%; height:220px; object-fit:cover; border-radius:12px; border:1px solid var(--gold);">
+            </div>
+        </div>
+
     </div>
 
-    <!-- 3. BÖLÜM: SÜPER GÜÇLER & STATS -->
-    <div class="section" id="sec3">
-      <h2>SÜPER GÜÇLER & YETENEKLER</h2>
-      
-      <div class="stat-card active" id="sc1">
-        <img src="foto5.jpg" alt="İrem">
-        <h3 style="color:#ed1d24;">İREM</h3>
-        <p style="margin-top:8px;"><strong>Süper Güç:</strong> Sanat Yaratımı, Kedi Mıknatısı, Tatlılık Saldırısı (%100), Isırma Kuvveti (%500) 😼🎨</p>
-      </div>
+    <script>
+        // 1. YILDIZ ANIMASYONUNU OLUŞTURMA
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 1 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.setProperty('--delay', (Math.random() * 3) + 's');
+            starsContainer.appendChild(star);
+        }
 
-      <div class="stat-card" id="sc2">
-        <img src="foto6.jpg" alt="Emre">
-        <h3 style="color:#00d2ff;">EMRE</h3>
-        <p style="margin-top:8px;"><strong>Süper Güç:</strong> Çok Kaslı, Bilgisayar Dehası, Romantik Hamleler, Hemen Uykuya Dalmak, Sexylik (%10000000) 💻💪</p>
-      </div>
+        // 2. CHAPTER GEÇİŞLERİ (AĞLARI VE PASTAYI TEMİZLER)
+        function nextChapter(chNum) {
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            const targetSec = document.getElementById('ch' + chNum);
+            targetSec.classList.add('active');
 
-      <div class="stat-card" id="sc3">
-        <img src="foto7.jpg" alt="Ortak Güç">
-        <h3 style="color:#ffd700;">ORTAK GÜÇ</h3>
-        <p style="margin-top:8px;">Birlikteyken Thanos'un parmak şıklatmasını bile durdurabilme gücü! 💥🛡️</p>
-      </div>
+            // Eğer Chapter 3'e geçilirse Stat Bar'ları doldur
+            if (chNum === 3) {
+                setTimeout(() => {
+                    document.querySelectorAll('.bar-inner').forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                }, 200);
+            }
+        }
 
-      <button class="btn-next" id="btnStat" onclick="nextStat()">Sonraki Kart ➔</button>
-      <button class="btn-next" id="btn3" style="display:none;" onclick="nextSec(4)">Sonsuzluk Taşlarına Geç ➔</button>
-    </div>
+        // 3. MUM SÖNDÜRME VE DİNAMİK AĞ EFEKTİ (CHAPTER 1)
+        const candles = document.getElementById('candles');
+        let isBlown = false;
 
-    <!-- 4. BÖLÜM: SONSUZLUK TAŞLARI OYUNU -->
-    <div class="section" id="sec4">
-      <h2>SONSUZLUK TAŞLARI</h2>
-      <p style="font-size:13px; color:#aaa;">Taşlara dokunarak güçlerini açığa çıkar:</p>
+        candles.addEventListener('click', blowCandles);
 
-      <div class="stones-grid">
-        <div class="stone" style="box-shadow: 0 0 15px #00ff66;" onclick="showStone('🟢 Zaman Taşı: Seninle geçirdiğim her saniye durup hiç bitmesin istiyorum.')">🟢</div>
-        <div class="stone" style="box-shadow: 0 0 15px #ff0033;" onclick="showStone('🔴 Gerçeklik Taşı: Seninle yaşadığım her an bir hayalin gerçekleşmesi gibi.')">🔴</div>
-        <div class="stone" style="box-shadow: 0 0 15px #00ccff;" onclick="showStone('💙 Uzay Taşı: Nerede olursak olalım, senin yanın benim tek evim.')">💙</div>
-        <div class="stone" style="box-shadow: 0 0 15px #cc00ff;" onclick="showStone('🟣 Güç Taşı: Her zorluğun üstesinden beraber gelebilecek güce sahibiz.')">🟣</div>
-        <div class="stone" style="box-shadow: 0 0 15px #ffff00;" onclick="showStone('🟡 Zihin Taşı: Aklımdan bir an bile çıkmıyorsun.')">🟡</div>
-        <div class="stone" style="box-shadow: 0 0 15px #ff9900;" onclick="showStone('🧡 Ruh Taşı: Sen benim ruhumu tamamlayan parçamsın.')">🧡</div>
-      </div>
+        function blowCandles() {
+            if (isBlown) return;
+            isBlown = true;
 
-      <div class="stone-msg" id="stoneMsg">Bir taşa dokun...</div>
+            document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+            document.getElementById('blow-msg').innerText = "İyi ki doğdun! Örümcek ağları evreni sarıyor! 🕸️✨";
+            
+            // Ağ Efektini Aktifleştir
+            const webOverlay = document.getElementById('web-overlay');
+            webOverlay.style.opacity = '1';
 
-      <button class="btn-next" onclick="nextSec(5)">Thor'un Çekicine Geç ➔</button>
-    </div>
+            document.getElementById('btn-ch1').style.display = 'block';
+        }
 
-    <!-- 5. BÖLÜM: THOR'UN ÇEKİCİ -->
-    <div class="section" id="sec5">
-      <h2>MJÖLNİR'İN ÇAĞRISI</h2>
-      <p style="font-size:13px; color:#aaa;">Çekici kendine çağırmak için ekrana hızlıca dokun! ⚡</p>
+        // 4. SONSUZLUK TAŞLARI (CHAPTER 4)
+        let activeStonesCount = 0;
+        function activateStone(el) {
+            if (!el.classList.contains('active')) {
+                el.classList.add('active');
+                activeStonesCount++;
+                if (activeStonesCount === 6) {
+                    document.getElementById('stones-msg').innerText = "Tüm taşlar toplandı! Evrenin gücü seninle! 🌌⚡";
+                    document.getElementById('btn-ch4').style.display = 'block';
+                }
+            }
+        }
 
-      <div class="hammer-area" onclick="summonHammer()">
-        <div class="hammer" id="hammer">🔨</div>
-      </div>
-
-      <p id="hammerMsg" style="display:none; color:#ffd700; font-weight:bold; margin-top:15px; font-size:15px;">
-        "Ne zaman ihtiyacın olursa olsun Thor'un çekici gibi hep sana geleceğim! ⚡❤️"
-      </p>
-
-      <button class="btn-next" id="btn5" style="display:none; margin-top:20px;" onclick="nextSec(6)">Mektuba Geç ➔</button>
-    </div>
-
-    <!-- 6. BÖLÜM: SPIDER-MAN & MARY JANE MEKTUP -->
-    <div class="section" id="sec6">
-      <h2>BENİM SÜPER KAHRAMANIMA ❤️</h2>
-      
-      <img src="foto8.jpg" alt="Spider-Man & MJ" class="letter-img">
-      
-      <p style="font-style:italic; color:#ffd700; margin-bottom:15px;">"Sen benim süper kahramanımsın..."</p>
-
-      <div class="letter-box">
-        <p><strong>Benim kahramanıma,</strong></p><br>
-        <p>Bütün evrenleri, tüm zaman çizgilerini ve alternatif gerçekleri gezseler; yine de seninle kesişen bu kutsal zaman çizgisinden daha güzel bir yer bulamazlardı.</p><br>
-        <p>Hani <em>"büyük güç, büyük sorumluluk getirir"</em> derler ya; senin hayatımdaki varlığın da bana dünyanın en şanslı insanı olma sorumluluğunu veriyor aşkım.</p><br>
-        <p>İyi ki doğdun, iyi ki varsın... ❤️</p>
-      </div>
-
-      <div class="post-credits">
-        🎬 POST-CREDITS SCENE:<br>
-        <span style="font-size:16px; color:#ffd700;">Seni 3000 kez seviyorum...</span>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    // Yıldız Arka Planı
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.width = Math.random() * 3 + 'px';
-      star.style.height = star.style.width;
-      star.style.left = Math.random() * 100 + 'vw';
-      star.style.top = Math.random() * 100 + 'vh';
-      star.style.setProperty('--duration', (Math.random() * 3 + 1) + 's');
-      starsContainer.appendChild(star);
-    }
-
-    // Sayfa Değiştirici
-    function nextSec(secNum) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById('sec' + secNum).classList.add('active');
-    }
-
-    // 1. Bölüm: Mum Söndürme
-    let flamesOut = 0;
-    function extinguishCandle() {
-      if (flamesOut === 0) {
-        document.getElementById('flame1').classList.add('off');
-        flamesOut++;
-      } else if (flamesOut === 1) {
-        document.getElementById('flame2').classList.add('off');
-        flamesOut++;
-        document.getElementById('birthdayText').style.display = 'block';
-        document.getElementById('btn1').style.display = 'inline-block';
-        document.getElementById('webOverlay').classList.add('active');
-      }
-    }
-
-    // 2. Bölüm: Multiverse Kartları
-    let openedCards = new Set();
-    function toggleCard(cardNum) {
-      const body = document.getElementById('cb' + cardNum);
-      const isVisible = body.style.display === 'block';
-      body.style.display = isVisible ? 'none' : 'block';
-      
-      if (!isVisible) openedCards.add(cardNum);
-      if (openedCards.size === 4) {
-        document.getElementById('multiverseFinal').style.display = 'block';
-        document.getElementById('btn2').style.display = 'inline-block';
-      }
-    }
-
-    // 3. Bölüm: Stats Kartları
-    let currentStat = 1;
-    function nextStat() {
-      document.getElementById('sc' + currentStat).classList.remove('active');
-      currentStat++;
-      if (currentStat <= 3) {
-        document.getElementById('sc' + currentStat).classList.add('active');
-      }
-      if (currentStat === 3) {
-        document.getElementById('btnStat').style.display = 'none';
-        document.getElementById('btn3').style.display = 'inline-block';
-      }
-    }
-
-    // 4. Bölüm: Sonsuzluk Taşları
-    function showStone(text) {
-      document.getElementById('stoneMsg').innerText = text;
-    }
-
-    // 5. Bölüm: Thor Çekici
-    let hammerScale = 1;
-    function summonHammer() {
-      if (hammerScale < 4) {
-        hammerScale += 0.6;
-        document.getElementById('hammer').style.transform = `scale(${hammerScale})`;
-      }
-      if (hammerScale >= 3.8) {
-        document.getElementById('hammerMsg').style.display = 'block';
-        document.getElementById('btn5').style.display = 'inline-block';
-      }
-    }
-  </script>
+        // 5. MJOLNIR KALDIRMA (CHAPTER 5)
+        let hammerClicks = 0;
+        function liftHammer() {
+            const hammer = document.getElementById('hammer');
+            hammerClicks++;
+            hammer.style.transform = `scale(${1 + hammerClicks * 0.1}) rotate(${hammerClicks % 2 === 0 ? 10 : -10}deg)`;
+            
+            if (hammerClicks >= 3) {
+                hammer.style.transform = 'scale(1.3) translateY(-15px)';
+                document.getElementById('hammer-msg').innerText = "Çekici kaldırdın! Sen Kesinlikle Layıksın! ⚡🔨";
+                document.getElementById('btn-ch5').style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
