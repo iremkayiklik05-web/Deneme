@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İyi ki Doğdun Sevgilim!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, #0f0c20, #2b1055, #591a73);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 40px 25px;
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      max-width: 90%;
+      width: 360px;
+      z-index: 10;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .cake {
+      font-size: 80px;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: pulse 1.8s infinite alternate;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ff7eb3;
+      text-shadow: 0 0 12px rgba(255, 126, 179, 0.6);
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #e0e0e0;
+      line-height: 1.5;
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      opacity: 0.8;
+      border-radius: 2px;
+      animation: fall 3s linear infinite;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1) rotate(3deg); }
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) rotate(720deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="cake">🎂</div>
+    <h1>İyi ki doğdun sevgilim! ✨</h1>
+    <p>Seninle geçen her gün, hayatımın en güzel hediyesi... ❤️</p>
+  </div>
+
+  <script>
+    // Konfeti Oluşturucu
+    const colors = ['#ff7eb3', '#ff758c', '#7afcff', '#feff9c', '#fff', '#e28743'];
+    for (let i = 0; i < 60; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      confetti.style.animationDelay = (Math.random() * 3) + 's';
+      confetti.style.width = (Math.random() * 8 + 6) + 'px';
+      confetti.style.height = confetti.style.width;
+      document.body.appendChild(confetti);
+    }
+  </script>
+
+</body>
+</html>
