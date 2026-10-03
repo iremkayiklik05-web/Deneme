@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Hero!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #e50914;
+            --spider-red: #ff1e27;
+            --spider-blue: #0f4c81;
+            --gold: #ffd700;
+            --dark-bg: #090a0f;
+            --card-bg: rgba(20, 24, 38, 0.75);
+            --text-glow: 0 0 12px rgba(255, 30, 39, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* YILDIZ ANIMASYONLU ARKA PLAN */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at bottom, #1a1c29 0%, #08090d 100%);
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: pulse-star var(--duration) infinite ease-in-out var(--delay);
+        }
+
+        @keyframes pulse-star {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 8px #fff; }
+        }
+
+        /* MAIN CONTAINER & SECTIONS */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            margin: 20px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: var(--text-glow);
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 2.2rem; color: var(--gold); }
+        h2 { font-size: 1.6rem; color: var(--spider-red); }
+
+        .btn {
+            display: block;
+            width: 80%;
+            max-width: 280px;
+            margin: 25px auto 0;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #e50914, #990000);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 30, 39, 0.7);
+        }
+
+        /* CHAPTER 1: PASTA & MUMS & AĞLAR */
+        .cake-wrapper {
+            position: relative;
+            width: 220px;
+            height: 200px;
+            margin: 40px auto 20px;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to right, #111, #222);
+            border-radius: 15px 15px 5px 5px;
+            border: 2px solid var(--spider-red);
+            box-shadow: inset 0 0 20px rgba(255,30,39,0.3);
+        }
+
+        /* Örümcek Ağı Desenli Pasta Üstü */
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 30%, rgba(255,255,255,0.1) 31%),
+                        repeating-conic-gradient(from 0deg, transparent 0deg 28deg, rgba(255,255,255,0.15) 30deg);
+            border-radius: 13px 13px 0 0;
+        }
+
+        .candles {
+            position: absolute;
+            top: 35px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 30px;
+        }
+
+        .candle {
+            width: 12px;
+            height: 45px;
+            background: linear-gradient(to bottom, #fff, var(--gold));
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: orange;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 12px gold, 0 0 20px red;
+            animation: flicker 0.6s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(0.9) rotate(-2deg); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+        }
+
+        /* SPIDER WEBS EFFECT - SADECE CHAPTER 1 İÇİN */
+        #web-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 5;
+        }
+
+        .web-corner {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+        }
+
+        .web-tl { top: 0; left: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 L100,0 C70,30 30,70 0,100 Z' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M0,0 L100,100 M0,0 L50,100 M0,0 L100,50' stroke='white' stroke-width='1'/%3E%3Cpath d='M20,0 C20,20 0,20 0,20 M40,0 C40,40 0,40 0,40 M60,0 C60,60 0,60 0,60 M80,0 C80,80 0,80 0,80' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E"); }
+        .web-tr { top: 0; right: 0; transform: scaleX(-1); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 L100,0 C70,30 30,70 0,100 Z' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M0,0 L100,100 M0,0 L50,100 M0,0 L100,50' stroke='white' stroke-width='1'/%3E%3Cpath d='M20,0 C20,20 0,20 0,20 M40,0 C40,40 0,40 0,40 M60,0 C60,60 0,60 0,60 M80,0 C80,80 0,80 0,80' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E"); }
+
+        /* CHAPTER 2: MULTIVERSE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .universe-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .universe-card:hover { transform: translateY(-5deg); }
+
+        .universe-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* CHAPTER 3: HERO STATS */
+        .hero-img-box {
+            width: 100%;
+            max-width: 320px;
+            height: 250px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .hero-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stat-bar {
+            margin: 12px 0;
+        }
+
+        .stat-name {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: #ddd;
+        }
+
+        .bar-outer {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--spider-red), var(--gold));
+            width: 0%;
+            transition: width 1.2s ease-in-out;
+        }
+
+        /* CHAPTER 4: INFINITY STONES */
+        .stones-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .stone {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .stone.active {
+            opacity: 1;
+            transform: scale(1.25);
+        }
+
+        .space { background: #00d2ff; box-shadow: 0 0 15px #00d2ff; }
+        .reality { background: #ff0055; box-shadow: 0 0 15px #ff0055; }
+        .power { background: #9500ff; box-shadow: 0 0 15px #9500ff; }
+        .mind { background: #ffcc00; box-shadow: 0 0 15px #ffcc00; }
+        .time { background: #00ff66; box-shadow: 0 0 15px #00ff66; }
+        .soul { background: #ff7700; box-shadow: 0 0 15px #ff7700; }
+
+        /* CHAPTER 5: MJ & SPIDER-MAN LETTER */
+        .letter-box {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #f0f0f0;
+            background: rgba(0,0,0,0.4);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--spider-red);
+            margin-top: 20px;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .photo-gallery img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YILDIZLI ARKA PLAN -->
+    <div class="stars-container" id="stars"></div>
+
+    <div class="container">
+
+        <!-- CHAPTER 1: INTRO & PASTA -->
+        <div class="section active" id="ch1">
+            <div id="web-overlay">
+                <div class="web-corner web-tl"></div>
+                <div class="web-corner web-tr"></div>
+            </div>
+
+            <h1>SÜPER KAHRAMANIMIN DOĞUM GÜNÜ</h1>
+            <h2>Earth-616'nın En Özel Kahramanına...</h2>
+            
+            <p style="text-align: center; margin-top: 10px; color: #aaa; font-size: 0.9rem;">
+                Dileğini tut ve muma dokunarak/üfleyerek söndür!
+            </p>
+
+            <div class="cake-wrapper">
+                <div class="candles" id="candles">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+                <div class="cake"></div>
+            </div>
+
+            <div id="blow-msg" style="text-align:center; height:24px; font-weight:bold; color:var(--gold);"></div>
+
+            <button class="btn" id="btn-ch1" style="display:none;" onclick="nextChapter(2)">Multiverse'e Geç ➔</button>
+        </div>
+
+        <!-- CHAPTER 2: MULTIVERSE CARDS -->
+        <div class="section" id="ch2">
+            <h2>MULTIVERSE KARTLARI</h2>
+            <p style="text-align: center; color: #ccc; font-size: 0.9rem;">Farklı evrenlerdeki en güzel anlarımız...</p>
+            
+            <div class="cards-grid">
+                <div class="universe-card">
+                    <img src="foto1.jpg" alt="Earth-616">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-616</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Bizim Asıl Evrenimiz</p>
+                </div>
+                <div class="universe-card">
+                    <img src="foto2.jpg" alt="Earth-415">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-415</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Buz Üstündeki Anlar</p>
+                </div>
+                <div class="universe-card">
+                    <img src="foto3.jpg" alt="Earth-718">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-718</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Masal Evreni</p>
+                </div>
+                <div class="universe-card">
+                    <img src="foto4.jpg" alt="Earth-227">
+                    <h3 style="color:var(--gold); font-size:1rem;">Earth-227</h3>
+                    <p style="font-size:0.8rem; color:#bbb;">Sonsuz Sevgi</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="nextChapter(3)">Güç Analizine Geç ➔</button>
+        </div>
+
+        <!-- CHAPTER 3: HERO STATS -->
+        <div class="section" id="ch3">
+            <h2>KAHRAMAN GÜÇ ANALİZİ</h2>
+            
+            <div class="hero-img-box">
+                <img src="foto5.jpg" alt="Hero Portrait">
+            </div>
+
+            <div style="max-width: 450px; margin: 0 auto;">
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Örümcek Hissiyatı (Spider-Sense)</span><span>%100</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Tatlılık & Sempatiklik</span><span>%1000</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Beni Mutlu Etme Gücü</span><span>%Infinity</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-name"><span>Karizma & Yakışıklılık</span><span>%100</span></div>
+                    <div class="bar-outer"><div class="bar-inner" data-width="100%"></div></div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="nextChapter(4)">Sonsuzluk Taşları ➔</button>
+        </div>
+
+        <!-- CHAPTER 4: INFINITY STONES -->
+        <div class="section" id="ch4">
+            <h2>SONSUZLUK TAŞLARI</h2>
+            <p style="text-align:center; color:#ccc; font-size:0.9rem;">Tüm taşları aktifleştirerek evrenin en büyük gücünü açığa çıkar!</p>
+
+            <div class="stones-container">
+                <div class="stone space" onclick="activateStone(this)"></div>
+                <div class="stone reality" onclick="activateStone(this)"></div>
+                <div class="stone power" onclick="activateStone(this)"></div>
+                <div class="stone mind" onclick="activateStone(this)"></div>
+                <div class="stone time" onclick="activateStone(this)"></div>
+                <div class="stone soul" onclick="activateStone(this)"></div>
+            </div>
+
+            <div id="stones-msg" style="text-align:center; font-weight:bold; color:var(--gold); height:30px;"></div>
+
+            <button class="btn" id="btn-ch4" style="display:none;" onclick="nextChapter(5)">Mjolnir Testi ➔</button>
+        </div>
+
+        <!-- CHAPTER 5: THOR'S HAMMER -->
+        <div class="section" id="ch5">
+            <h2>LAYIKLIK TESTİ</h2>
+            <p style="text-align:center; color:#ccc; font-size:0.9rem; margin-bottom: 20px;">Thor'un Çekici Mjolnir'i kaldırmaya hazır mısın?</p>
+
+            <div style="text-align:center;">
+                <div id="hammer" style="font-size: 5rem; cursor:pointer; transition: transform 0.2s;" onclick="liftHammer()">🔨</div>
+            </div>
+
+            <div id="hammer-msg" style="text-align:center; margin-top:15px; font-weight:bold; color:var(--gold); height:30px;"></div>
+
+            <button class="btn" id="btn-ch5" style="display:none;" onclick="nextChapter(6)">Mektuba Geç ➔</button>
+        </div>
+
+        <!-- CHAPTER 6: ROMANTIC LETTER -->
+        <div class="section" id="ch6">
+            <h2>SEN BENİM EN BÜYÜK KAHRAMANIMSIN</h2>
+
+            <div class="photo-gallery">
+                <img src="foto6.jpg" alt="Foto 6">
+                <img src="foto7.jpg" alt="Foto 7">
+            </div>
+
+            <div class="letter-box">
+                <p>İyi ki doğdun sevgilim, iyi ki hayatımdasın...</p>
+                <br>
+                <p>Sen benim sadece sevgilim değil, bu dünyadaki en özel kahramanımsın. Spider-Man gibi her zaman koruyan, neşelendiren ve hayatıma renk katan birisin. Sen yanımdayken her evren çok daha güzel, her an çok daha anlamlı.</p>
+                <br>
+                <p>Yeni yaşında tüm dileklerinin gerçekleşmesini, birlikte daha nice mutlu, kahkaha dolu ve aşk dolu yıllar geçirmeyi diliyorum.</p>
+                <br>
+                <p style="text-align: right; font-weight: bold; color: var(--gold);">Seni Çok Seviyorum ❤️</p>
+            </div>
+
+            <div style="margin-top:20px;">
+                <img src="foto8.jpg" alt="Foto 8" style="width:100%; height:220px; object-fit:cover; border-radius:12px; border:1px solid var(--gold);">
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. YILDIZ ANIMASYONUNU OLUŞTURMA
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 1 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.setProperty('--delay', (Math.random() * 3) + 's');
+            starsContainer.appendChild(star);
+        }
+
+        // 2. CHAPTER GEÇİŞLERİ (AĞLARI VE PASTAYI TEMİZLER)
+        function nextChapter(chNum) {
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            const targetSec = document.getElementById('ch' + chNum);
+            targetSec.classList.add('active');
+
+            // Eğer Chapter 3'e geçilirse Stat Bar'ları doldur
+            if (chNum === 3) {
+                setTimeout(() => {
+                    document.querySelectorAll('.bar-inner').forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                }, 200);
+            }
+        }
+
+        // 3. MUM SÖNDÜRME VE DİNAMİK AĞ EFEKTİ (CHAPTER 1)
+        const candles = document.getElementById('candles');
+        let isBlown = false;
+
+        candles.addEventListener('click', blowCandles);
+
+        function blowCandles() {
+            if (isBlown) return;
+            isBlown = true;
+
+            document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+            document.getElementById('blow-msg').innerText = "İyi ki doğdun! Örümcek ağları evreni sarıyor! 🕸️✨";
+            
+            // Ağ Efektini Aktifleştir
+            const webOverlay = document.getElementById('web-overlay');
+            webOverlay.style.opacity = '1';
+
+            document.getElementById('btn-ch1').style.display = 'block';
+        }
+
+        // 4. SONSUZLUK TAŞLARI (CHAPTER 4)
+        let activeStonesCount = 0;
+        function activateStone(el) {
+            if (!el.classList.contains('active')) {
+                el.classList.add('active');
+                activeStonesCount++;
+                if (activeStonesCount === 6) {
+                    document.getElementById('stones-msg').innerText = "Tüm taşlar toplandı! Evrenin gücü seninle! 🌌⚡";
+                    document.getElementById('btn-ch4').style.display = 'block';
+                }
+            }
+        }
+
+        // 5. MJOLNIR KALDIRMA (CHAPTER 5)
+        let hammerClicks = 0;
+        function liftHammer() {
+            const hammer = document.getElementById('hammer');
+            hammerClicks++;
+            hammer.style.transform = `scale(${1 + hammerClicks * 0.1}) rotate(${hammerClicks % 2 === 0 ? 10 : -10}deg)`;
+            
+            if (hammerClicks >= 3) {
+                hammer.style.transform = 'scale(1.3) translateY(-15px)';
+                document.getElementById('hammer-msg').innerText = "Çekici kaldırdın! Sen Kesinlikle Layıksın! ⚡🔨";
+                document.getElementById('btn-ch5').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
